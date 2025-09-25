@@ -150,13 +150,14 @@ anomaly_data = []
 
 for date in anomaly_dates:
     anomaly_data.append({
-        'date': date.strftime('%Y-%m-%d'),
+        'date': pd.to_datetime(date).strftime('%Y-%m-%d'),  # <-- Fix here
         'service': random.choice(['EC2', 'RDS', 'Lambda']),
         'region': random.choice(['us-east-1', 'us-west-2']),
         'anomaly_score': round(random.uniform(0.7, 0.95), 3),
         'cost_spike': round(random.uniform(1000, 5000), 2),
         'detected': True
     })
+
 
 anomaly_df = pd.DataFrame(anomaly_data)
 anomaly_df.to_csv(f'{base_dir}/data/sample_data/anomaly_data.csv', index=False)
